@@ -1,3 +1,5 @@
+% Linearisation of evaporator model
+
 % Linearise model about (X2,P2) = (25,50.5) 
 % and (F1,F2,X1,F5,Q100,T1) = (1,1,1,1,1,1)
 [evapA1,evapB1,evapC1,evapD1] = linmod('evaporator',[25,50.5],[1,1,1,1,1,1]);
