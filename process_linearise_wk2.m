@@ -1,9 +1,9 @@
-% Week 2 linearise
+ % Week 2 linearise
 
 % steady-state state guess
 X0 = [25,50.5,194.7,1,208,2];
 
-X1 = [1,25,50.5,194.7,208,2]
+X1 = [1,25,50.5,194.7,208,2];
 % steady-state input guess
 U0 = [10,2,5,40,194.7,50,25,208];
 
@@ -28,5 +28,28 @@ sys8 = ss(procA1,-8*Bnew,Cnew,Dnew);
 sys11 = ss(procA1,-11*Bnew,Cnew,Dnew);
 sys14 = ss(procA1,-14*Bnew,Cnew,Dnew);
 sys14_2 = ss(procA1,-14.2*Bnew,Cnew,Dnew);
+
+% model from heuristic development
 sys65 = ss(procA1,-65*Bnew,Cnew,Dnew);
+
+% from the various systems bode plots may be generated to find phase margin
+
+% given that the system with K_p = 14.2 provides a phase margin of 45deg,
+% we use that value in our system.
+% In order to develop a PI controller which sets the phase margin to 40deg
+% at 0.604rad/s (found from margin plot) we set the phase of the controller
+% to -5deg at this frequency
+
+% set up controller transfer function
+
+omega = 0.604i;
+K_p = 14.2;
+syms T_i;
+
+% setup controller transfer function
+control_tf = angle((T_i*omega + 1)/(omega*T_i));
+% solve with an initial close guess (this avoids complex solns)
+T_i = vpasolve(control_tf==-0.087266,T_i,18);
+
+% NEED TO KNOW HOW TO CHECK MARGINS ARE UNCHANGED
 
