@@ -8,6 +8,7 @@
 *.mex*
 
 # Packaged app and toolbox files
+
 *.mlappinstall
 *.mltbx
 
@@ -26,3 +27,8 @@ codegen/
 
 # Octave session info
 octave-workspace
+
+# other random bumf
+*.m~
+*.autosave
+*.swp
