@@ -49,7 +49,18 @@ syms T_i;
 % setup controller transfer function
 control_tf = angle((T_i*omega + 1)/(omega*T_i));
 % solve with an initial close guess (this avoids complex solns)
-T_i = vpasolve(control_tf==-0.087266,T_i,18);
+vpasolve(control_tf==-0.087266,T_i,18)
 
-% NEED TO KNOW HOW TO CHECK MARGINS ARE UNCHANGED
+% determine if bode plot is correct (0dB crossover @ ~0.604rad/s with phase
+% margin of ~ 40deg)
 
+% set up transfer function variable
+s = tf('s');
+
+% linearised system transfer function
+G_tf = -Cnew*inv(s*eye(6) - procA1)*Bnew
+
+% controller tranfer function
+K_tf = K_p * (1 + 1/(s*18.924));
+
+margin(K_tf*G_tf)
