@@ -22,11 +22,6 @@ Dnew = procD1(6,2);
 % set up a range of systems
 sys0_pos = ss(procA1,Bnew,Cnew,Dnew);
 sys1 = ss(procA1,-Bnew,Cnew,Dnew);
-sys2 = ss(procA1,-2*Bnew,Cnew,Dnew);
-sys4 = ss(procA1,-4*Bnew,Cnew,Dnew);
-sys8 = ss(procA1,-8*Bnew,Cnew,Dnew);
-sys11 = ss(procA1,-11*Bnew,Cnew,Dnew);
-sys14 = ss(procA1,-14*Bnew,Cnew,Dnew);
 sys14_2 = ss(procA1,-14.2*Bnew,Cnew,Dnew);
 
 % model from heuristic development
