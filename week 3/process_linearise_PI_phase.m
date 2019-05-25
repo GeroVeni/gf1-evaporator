@@ -1,17 +1,16 @@
-% Week 2 linearise
+% Week 3 linearise
 
 % steady-state state guess
 X0 = [25,50.5,194.7,1,208,2];
 
-X1 = [1,25,50.5,194.7,208,2];
 % steady-state input guess
 U0 = [10,2,5,40,194.7,50,25,208];
 
 % obtain real steady-state conditions with fixed input
-[X,U,Y,DX] = trim('process_L2_prop_ports',X0',U0',[],[],[1;2;3;4;5;6;7;8],[]);
+[X,U,Y,DX] = trim('process_L2_PI_saturated_ports',X0',U0',[],[],[1;2;3;4;5;6;7;8],[]);
 
 % obtain linearised model about equilibrium
-[procA1,procB1,procC1,procD1] = linmod('process_L2_prop_ports',X,U);
+[procA1,procB1,procC1,procD1] = linmod('process_L2_PI_saturated_ports',X,U);
 
 % extract 2nd col of B (F2 in) and 6th row of C (L2 output), and (2,6)
 % element of D (F2->L2)
