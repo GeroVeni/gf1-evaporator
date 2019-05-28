@@ -14,9 +14,9 @@ U0 = [10,2,5,40,194.7,50,25,208];
 
 % extract 8th col of B (F200 in) and 2nd row of C (P2 output), and (8,2)
 % element of D (F200->P2)
-Bnew = procB1(:,8);
-Cnew = procC1(2,:);
-Dnew = procD1(2,8);
+Bnew = procB1(:,5);
+Cnew = procC1(1,:);
+Dnew = procD1(1,5);
 
 % set up linearised system
 sys1 = ss(procA1,-Bnew,Cnew,Dnew);
@@ -58,7 +58,7 @@ vpasolve(control_tf==-0.087266,T_i,18)
 % margin of ~ 40deg)
 
 % controller tranfer function
-K_tf = 14.2 * (1 + 1/(s*18.924));
+K_tf = - 5.0091 * (1 + 1/(s*8.5672));
 
 margin(K_tf*G_tf)
 
@@ -76,4 +76,4 @@ k_p_L2_mod = 10^(5.42/20)
 %%% check system
 % modified controller transfer function
 K_tf_opt = k_p_L2_mod * 14.2 * (1 + 1/(s*18.924));
-margin(K_tf_opt*G_tf)
+% margin(K_tf_opt*G_tf)

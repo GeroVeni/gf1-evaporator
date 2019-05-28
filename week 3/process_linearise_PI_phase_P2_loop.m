@@ -1,4 +1,4 @@
-% Week 3 linearise
+% Week 3 linearise14
 
 % steady-state state guess
 X0 = [25,50.5,194.7,1,208,2,0,0,0];
@@ -58,7 +58,7 @@ vpasolve(control_tf==-0.087266,T_i,18)
 % margin of ~ 40deg)
 
 % controller tranfer function
-K_tf = 14.2 * (1 + 1/(s*18.924));
+K_tf = 794.3282 * (1 + 1/(s*11.9687));
 
 margin(K_tf*G_tf)
 
@@ -76,4 +76,4 @@ k_p_L2_mod = 10^(5.42/20)
 %%% check system
 % modified controller transfer function
 K_tf_opt = k_p_L2_mod * 14.2 * (1 + 1/(s*18.924));
-margin(K_tf_opt*G_tf)
+% margin(K_tf_opt*G_tf)
