@@ -1,7 +1,7 @@
 % Week 3 linearise
 
 % steady-state state guess
-X0 = [25,50.5,194.7,1,208,2];
+X0 = [25,50.5,194.7,1,208,2,0,0];
 
 % steady-state input guess
 U0 = [10,2,5,40,194.7,50,25,208];
@@ -12,19 +12,15 @@ U0 = [10,2,5,40,194.7,50,25,208];
 % obtain linearised model about equilibrium
 [procA1,procB1,procC1,procD1] = linmod('process_L2_PI_saturated_ports',X,U);
 
-% extract 2nd col of B (F2 in) and 6th row of C (L2 output), and (2,6)
-% element of D (F2->L2)
-Bnew = procB1(:,2);
-Cnew = procC1(6,:);
-Dnew = procD1(6,2);
+% extract 8th col of B (F200 in) and 2nd row of C (P2 output), and (8,2)
+% element of D (F200->P2)
+Bnew = procB1(:,8);
+Cnew = procC1(2,:);
+Dnew = procD1(2,8);
 
 % set up a range of systems
-sys1_pos = ss(procA1,Bnew,Cnew,Dnew);
 sys1 = ss(procA1,-Bnew,Cnew,Dnew);
-sys14_2 = ss(procA1,-14.2*Bnew,Cnew,Dnew);
-
-% model from heuristic development
-sys65 = ss(procA1,-65*Bnew,Cnew,Dnew);
+margin(sys1)
 
 % from the various systems bode plots may be generated to find phase margin
 
@@ -52,9 +48,9 @@ vpasolve(control_tf==-0.087266,T_i,18)
 s = tf('s');
 
 % linearised system transfer function
-G_tf = -Cnew*inv(s*eye(6) - procA1)*Bnew
+G_tf = -Cnew*inv(s*eye(8) - procA1)*Bnew
 
 % controller tranfer function
 K_tf = K_p * (1 + 1/(s*18.924));
 
-margin(K_tf*G_tf)
+% margin(K_tf*G_tf)
