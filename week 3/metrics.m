@@ -58,7 +58,7 @@ end
 % Find settle time
 set_pt = N;
 for i = N:-1:1
-    if os_func(i) - 1 > 0.01 * overshoot
+    if abs(os_func(i) - 1) > 0.01 * overshoot
         set_pt = i;
         break;
     end
@@ -78,5 +78,7 @@ end
 % hold on;
 % scatter(t(stat_pts), os_func(stat_pts));
 % hold off;
-avgt = mean(diff(t(stat_pts)))
-avgf = 1 / (2*avgt)
+
+% Estimate average oscilation frequency
+avgt = mean(diff(t(stat_pts)));
+avg_freq = 1 / (2*avgt);
