@@ -18,24 +18,25 @@ if appr(x(N), set_val)
     ss_err = 0;
 else
     ss_err = x(N) - set_val;
+    return;
 end
 
 % Find overshoot function
 % i.e. the function used to compute the overshoot
 % depending on the case
-if appr(init_val, set_val)
-    os_func = @(ind) x(ind) / init_val;
+if init_val == set_val
+    os_func = @(ind) (x(ind) - set_val) / set_val;
 else
-    os_func = @(ind) (x(ind) - init_val) / (set_val - init_val);
+    os_func = @(ind) (x(ind) - set_val) / (set_val - init_val);
 end
 
 % Make function that finds is a point is stationary
 isstat = @(ind) (x(ind) - x(ind-1)) * (x(ind) - x(ind+1)) >= 0;
 
-% Find indices after start_time
+% Find overshoot
 peak_found = 0;
 overshoot = 0;
-% p = 0;
+p = 0;
 for i = 2:N-1
     if t(i-1) < start_time
         continue
@@ -43,26 +44,29 @@ for i = 2:N-1
     if ~peak_found && isstat(i)
         peak_found = 1;
     end
-    if peak_found && overshoot < abs(os_func(i) - 1)
-        overshoot = abs(os_func(i) - 1);
+    if peak_found && overshoot < abs(os_func(i))
+        overshoot = abs(os_func(i));
         p = i;
     end
 end
 
-% plot(t, os_func(1:N))
-% hold on,
-% scatter([t(p)], [overshoot + 1])
-% hold off;
+plot(t, os_func(1:N))
+hold on,
+scatter([t(p)], [overshoot])
+hold off;
 
 
 % Find settle time
 set_pt = N;
 for i = N:-1:1
-    if abs(os_func(i) - 1) > 0.01 * overshoot
+    if abs(os_func(i)) > 0.01 * overshoot
         set_pt = i;
         break;
     end
 end
+hold on,
+scatter(t(set_pt), os_func(set_pt))
+hold off
 set_time = t(set_pt) - start_time;
 
 % Find time points of peaks and troughs
@@ -75,9 +79,9 @@ for i = 2:(N-1)
         stat_pts = [stat_pts, i];
     end 
 end
-% hold on;
-% scatter(t(stat_pts), os_func(stat_pts));
-% hold off;
+hold on;
+scatter(t(stat_pts), os_func(stat_pts));
+hold off;
 
 % Estimate average oscilation frequency
 avgt = mean(diff(t(stat_pts)));
