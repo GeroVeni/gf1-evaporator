@@ -24,6 +24,8 @@ sys1_pos = ss(procA1,Bnew,Cnew,Dnew);
 sys1 = ss(procA1,-Bnew,Cnew,Dnew);
 sys14_2 = ss(procA1,-14.2*Bnew,Cnew,Dnew);
 
+margin(sys1)
+
 % model from heuristic development
 sys65 = ss(procA1,-65*Bnew,Cnew,Dnew);
 
@@ -58,4 +60,4 @@ G_tf = -Cnew*inv(s*eye(6) - procA1)*Bnew
 % controller tranfer function
 K_tf = K_p * (1 + 1/(s*18.924));
 
-margin(K_tf*G_tf)
+%margin(K_tf*G_tf)
