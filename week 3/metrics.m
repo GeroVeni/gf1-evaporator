@@ -14,7 +14,7 @@ if (N ~= numel(x))
 end
 
 % Find if there is any steady-state error
-if appr(x(N), set_val)
+if apprp(x(N), set_val)
     ss_err = 0;
 else
     ss_err = x(N) - set_val;

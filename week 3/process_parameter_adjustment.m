@@ -20,9 +20,21 @@
 
 %% PARAMETER SETUP
 % setup system parameters (with initial values)
-rho_A = 20
-M = 20
-UA2 = 6.84
+rho_A = 20;
+M = 20;
+UA2 = 6.84;
 
 %% 
 
+out_names = ["X2", "P2", "T2", "T3", "F4", "L2", "T100", "Q100", "F100", "Q200", "T201", "F5"];
+important = [1, 2, 5, 6, 9, 12];
+
+% for rho_A = 10:10:40
+%     for M = 15:5:25
+%         for UA2 = 5:8
+%             [t,x,y]=sim('controlled_process_parameterised');
+%         end
+%     end
+% end
+
+[t,x,y]=sim('controlled_process_parameterised');
