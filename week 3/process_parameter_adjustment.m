@@ -10,11 +10,7 @@
 % also check if ANY output or state values reach saturation value as this
 % also implies lack of control
 % reduce step size until system is controlled (ie maximum step)
-
-% calculate maximum relative overshoot
-% calculate settling time (time to 1% of overshoot)
-% calculate average oscillation frequency
-% for all relevant outputs (probably just (L2, X2, P2))
+% for all outputs get performative measures (with metrics function)
 % repeat for 50% of max step
 
 
@@ -24,5 +20,36 @@ rho_A = 20
 M = 20
 UA2 = 6.84
 
-%% 
+%% SIMULATE SYSTEM AND GATHER PERFORMATIVE MEASURES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
