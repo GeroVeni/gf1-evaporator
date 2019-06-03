@@ -14,10 +14,13 @@ if (N ~= numel(x))
 end
 
 % Find if there is any steady-state error
-if appr(x(N), set_val)
+if apprp(x(N), set_val)
     ss_err = 0;
 else
     ss_err = x(N) - set_val;
+    overshoot = -1;
+    set_time = -1;
+    avg_freq = -1;
     return;
 end
 
@@ -50,10 +53,10 @@ for i = 2:N-1
     end
 end
 
-plot(t, os_func(1:N))
-hold on,
-scatter([t(p)], [overshoot])
-hold off;
+% plot(t, x(1:N))
+% hold on,
+% scatter(t(p), overshoot*x(p))
+% hold off;
 
 
 % Find settle time
@@ -64,9 +67,9 @@ for i = N:-1:1
         break;
     end
 end
-hold on,
-scatter(t(set_pt), os_func(set_pt))
-hold off
+% hold on,
+% scatter(t(set_pt), x(set_pt))
+% hold off
 set_time = t(set_pt) - start_time;
 
 % Find time points of peaks and troughs
@@ -79,9 +82,9 @@ for i = 2:(N-1)
         stat_pts = [stat_pts, i];
     end 
 end
-hold on;
-scatter(t(stat_pts), os_func(stat_pts));
-hold off;
+% hold on;
+% scatter(t(stat_pts), x(stat_pts));
+% hold off;
 
 % Estimate average oscilation frequency
 avgt = mean(diff(t(stat_pts)));
