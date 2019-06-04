@@ -47,7 +47,7 @@ for i = 1:length(y(1,:))
         title(out_names(i));
     end
 end
-% 
+
 % K = K_opt;
 % L = L_opt;
 % [t,x,y]=sim('process_state_control_out_ports');
@@ -64,17 +64,17 @@ end
 %     end
 % end
 % 
-[t,x,y]=sim('process_state_ctrl_gain_schedule');
-j = 1;
-for i = 1:length(y(1,:))
-    figure(5)
-    sgtitle('gain schedules state feedback control')
-    if i == 1 || i==2 || i==6    
-        subplot(3,1,j)
-        j = j+1;
-        plot(t,y(:,i))
-        %     ylim([0 2]);
-        title(out_names(i));
-    end
-end
+% [t,x,y]=sim('process_state_ctrl_gain_schedule');
+% j = 1;
+% for i = 1:length(y(1,:))
+%     figure(5)
+%     sgtitle('gain schedules state feedback control')
+%     if i == 1 || i==2 || i==6    
+%         subplot(3,1,j)
+%         j = j+1;
+%         plot(t,y(:,i))
+%         %     ylim([0 2]);
+%         title(out_names(i));
+%     end
+% end
 
