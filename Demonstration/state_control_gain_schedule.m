@@ -3,20 +3,26 @@ process_model = 'process_state_ports';
 
 %% produce open-loop linearisations at 5 X2 set-points (15,20,25,30,35)
 % steady-state input
-U = [2,194.7,208];
+Ug = [2,194.7,208];
 % 'steady-state' states
-X1 = [15,50.5,1];
-X2 = [20,50.5,1];
-X3 = [25,50.5,1];
-X4 = [30,50.5,1];
-X5 = [35,50.5,1];
+X1g = [15,50.5,1];
+X2g = [20,50.5,1];
+X3g = [25,50.5,1];
+X4g = [30,50.5,1];
+X5g = [35,50.5,1];
+
+[X1,U1,Y,DX] = trim(process_model,X1g',Ug',[],[1;2;3],[],[]);
+[X2,U2,Y,DX] = trim(process_model,X2g',Ug',[],[1;2;3],[],[]);
+[X3,U3,Y,DX] = trim(process_model,X3g',Ug',[],[1;2;3],[],[]);
+[X4,U4,Y,DX] = trim(process_model,X4g',Ug',[],[1;2;3],[],[]);
+[X5,U5,Y,DX] = trim(process_model,X5g',Ug',[],[1;2;3],[],[]);
 
 % obtain linearised models about each 'equilibrium'
-[A1,B1,C1,D1] = linmod(process_model,X1,U);
-[A2,B2,C2,D2] = linmod(process_model,X2,U);
-[A3,B3,C3,D3] = linmod(process_model,X3,U);
-[A4,B4,C4,D4] = linmod(process_model,X4,U);
-[A5,B5,C5,D5] = linmod(process_model,X5,U);
+[A1,B1,C1,D1] = linmod(process_model,X1,U1);
+[A2,B2,C2,D2] = linmod(process_model,X2,U2);
+[A3,B3,C3,D3] = linmod(process_model,X3,U3);
+[A4,B4,C4,D4] = linmod(process_model,X4,U4);
+[A5,B5,C5,D5] = linmod(process_model,X5,U5);
 
 % build extended A and B matricies
 A1_ext = [[A1,zeros(3)];
@@ -70,7 +76,8 @@ L5_opt = KL5(1:3,4:6);
 
 %% open-loop linearisation using v_dot as a new state, placing [K,L] poles
 % define K poles L poles
-P = [[-0.25,-0.25,-1],[-0.2,-0.2,-0.2]];
+%P = [[-0.0491 + 0.0028i, -0.0491 - 0.0028i, -0.0887],[-0.01,-0.01,-0.01]];
+P = [[-0.1, -0.1, -0.1],[-0.05, -0.05, -0.05]];
 % place for KL matricies
 KL1 = place(A1_ext,B1_ext,P);
 KL2 = place(A2_ext,B2_ext,P);

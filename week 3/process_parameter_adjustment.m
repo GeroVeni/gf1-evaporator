@@ -32,13 +32,24 @@ state_saturated = [3, 5, 9];
 ss_vals = [25, 50.5, 1];
 sat_lims = [100, 16, 2, 16, 400, 416, 4];
 
+% rho_A_id, M_id, UA2_id, step_id
+RES = zeros(4, 3, 4, 8, 2);
+
 tot = 8*4*3*4;
 cnt = 0;
 err_cnt = 0;
-for rho_A = 10:10:40
-    for M = 15:5:25
-        for UA2 = 5:8
+rho_As = [10:10:40];
+Ms = [15:5:25];
+UA2s = [5:8];
+for rho_A_id = 1:length(rho_As)
+    for M_id = 1:length(Ms)
+        for UA2_id = 1:length(UA2s)
             for step_pos = 1:8
+                rho_A = rho_As(rho_A_id);
+                M = Ms(M_id);
+                UA2 = UA2s(UA2_id);
+                
+                % Check upper lim
                 disp("Progress: " + 100 * cnt / tot)
                 steps = zeros(1, 8);
                 steps(step_pos) = max_high(step_pos) / 2;
@@ -46,14 +57,17 @@ for rho_A = 10:10:40
                 cnt = cnt + 1;
                 if (err_found)
                     err_cnt = err_cnt + 1;
-                    disp("Error: " + rho_A + " " + M + " " + UA2 + " " + step_pos)
+                    disp("Error: " + rho_A + " " + M + " " + UA2 + " " + step_pos + " high")
+                    disp("Vals: " + ss_err + " " + os + " " + set_time + " " + avg_freq)
                 end
                 
+                % Check lower lim
                 steps(step_pos) = max_low(step_pos) / 2;
                 checkres;
                 if (err_found)
                     err_cnt = err_cnt + 1;
-                    disp("Error: " + rho_A + " " + M + " " + UA2 + " " + step_pos)
+                    disp("Error: " + rho_A + " " + M + " " + UA2 + " " + step_pos + " low")
+                    disp("Vals: " + ss_err + " " + os + " " + set_time + " " + avg_freq)
                 end
             end
         end

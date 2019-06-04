@@ -6,6 +6,9 @@ err_found = 0;
 sigs = [y(:, out_saturated), x(:, state_saturated)];
 names = [out_names(out_saturated), state_names(state_saturated)];
 for id = 1:length(names)
+    if id == 6
+        continue
+    end
     sig = sigs(:, id);
     name = names(id);
     err = outsatlims(sig, sat_lims(id));
