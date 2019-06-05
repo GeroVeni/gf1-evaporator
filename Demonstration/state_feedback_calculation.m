@@ -1,3 +1,4 @@
+%% Script for state space controllers (proportional, integral, LQR opt)
 % This file manages the linearisation and calulations relating to the
 % system with a (L2, P2, X2) -> (F2, F200, P100) state feedback controller 
 % under testing.
@@ -7,7 +8,7 @@
 
 % initialise process model name
 process_model = 'linearise_open_loop';
-closed_process_model = 'linearise_int_state_feedback';
+closed_process_model = 'linearise_prop_state_feedback';
 
 %% open-loop linearisation, placing K matrix poles
 % steady-state state
@@ -20,8 +21,8 @@ U = [2,194.7,208];
 
 % consider open loop poles (0, -0.0558, -0.1)
 eig(A);
-
-P = [ 0,-0.2,-0.2];
+% use basic proportional controller closed-loop poles as a starting point
+P = [-0.6242 + 0.247i, -0.6242 - 0.247i, -1.4666];
 K_prop = place(A,B,P);
 L_prop = zeros(3);
 
@@ -31,7 +32,8 @@ L = L_prop;
 
 %% closed-loop pole validation
 % steady-state state guess
-X = [25,50.5,1,208,2,194.7];
+% X = [25,50.5,1,208,2,194.7];
+X = [25,50.5,1];
 % steady-state input
 U = [2,194.7,208];
 % obtain linearised model about equilibrium
@@ -59,15 +61,15 @@ L_int = KL(1:3,4:6);
 
 %% optimising control using LQR
 % setup Q and R weight matricies
-% Q = [[1,0,0,0,0,0];
-%      [0,1,0,0,0,0];
-%      [0,0,1,0,0,0];
-%      [0,0,0,1,0,0];
-%      [0,0,0,0,1,0];
-%      [0,0,0,0,0,1]];
-% R = [[1,0,0];
-%      [0,1,0];
-%      [0,0,1]];
+Q = [[1,0,0,0,0,0];
+     [0,1,0,0,0,0];
+     [0,0,1,0,0,0];
+     [0,0,0,1,0,0];
+     [0,0,0,0,1,0];
+     [0,0,0,0,0,1]];
+R = [[1,0,0];
+     [0,1,0];
+     [0,0,1]];
 
 [KL,S,e] = lqr(A_ext,B_ext,Q,R);
 % separate K and L matricies
