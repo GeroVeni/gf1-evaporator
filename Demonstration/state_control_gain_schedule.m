@@ -46,15 +46,15 @@ B5_ext = [B5;zeros(3)];
 %% optimising control using LQR
 % setup Q and R weight matricies (we assume these are the same for all set
 % points)
-Q = [[10,0,0,0,0,0];
-     [0,10,0,0,0,0];
-     [0,0,10,0,0,0];
-     [0,0,0,1,0,0];
-     [0,0,0,0,1,0];
-     [0,0,0,0,0,1]];
-R = [[1,0,0];
-     [0,1,0];
-     [0,0,1]];
+% Q = [[10,0,0,0,0,0];
+%      [0,10,0,0,0,0];
+%      [0,0,10,0,0,0];
+%      [0,0,0,1,0,0];
+%      [0,0,0,0,1,0];
+%      [0,0,0,0,0,1]];
+% R = [[1,0,0];
+%      [0,1,0];
+%      [0,0,1]];
 
 % generate KL matricies
 KL1 = lqr(A1_ext,B1_ext,Q,R);
