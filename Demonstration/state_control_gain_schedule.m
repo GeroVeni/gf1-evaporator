@@ -1,5 +1,5 @@
 % initialise process model name
-process_model = 'process_state_ports';
+process_model = 'linearise_open_loop';
 
 %% produce open-loop linearisations at 5 X2 set-points (15,20,25,30,35)
 % steady-state input
