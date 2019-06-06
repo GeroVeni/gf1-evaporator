@@ -8,7 +8,7 @@ while abs(hi-lo) > 10^(-2)
     steps(step_id) = (hi + lo) / 2;
     
     % Runs a check to see if there are any ss error / saturations
-    checkres;
+    err_found = checkres(steps);
     
     if (err_found)
         % Doesnt work => decrease gain
@@ -26,7 +26,7 @@ while abs(hi-lo) > 10^(-2)
     steps(step_id) = (hi + lo) / 2;
     
     % Runs a check to see if there are any ss error / saturations
-    checkres;
+    err_found = checkres(steps);
     
     if (err_found)
         % Doesnt work => decrease gain

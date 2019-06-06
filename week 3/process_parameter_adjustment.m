@@ -34,13 +34,15 @@ sat_lims = [100, 16, 2, 16, 400, 416, 4];
 
 % rho_A_id, M_id, UA2_id, step_id
 RES = zeros(4, 3, 4, 8, 2);
+SAT_STATS = zeros(4, 3, 4, 8, 2, 7);
+CON_STATS = zeros(4, 3, 4, 8, 2, 4, 3);
 
 tot = 8*4*3*4;
 cnt = 0;
 err_cnt = 0;
-rho_As = [10:10:40];
-Ms = [15:5:25];
-UA2s = [5:8];
+rho_As = 10:10:40;
+Ms = 15:5:25;
+UA2s = 5:8;
 for rho_A_id = 1:length(rho_As)
     for M_id = 1:length(Ms)
         for UA2_id = 1:length(UA2s)
@@ -53,21 +55,25 @@ for rho_A_id = 1:length(rho_As)
                 disp("Progress: " + 100 * cnt / tot)
                 steps = zeros(1, 8);
                 steps(step_pos) = max_high(step_pos) / 2;
-                checkres;
+                [err_found, sat_vals, con_vals] = checkres(steps);
+                RES(rho_A_id, M_id, UA2_id, step_pos, 1) = err_found;
+                SAT_STATS(rho_A_id, M_id, UA2_id, step_pos, 1, :) = sat_vals;
+                CON_STATS(rho_A_id, M_id, UA2_id, step_pos, 1, :, :) = con_vals;
                 cnt = cnt + 1;
                 if (err_found)
                     err_cnt = err_cnt + 1;
                     disp("Error: " + rho_A + " " + M + " " + UA2 + " " + step_pos + " high")
-                    disp("Vals: " + ss_err + " " + os + " " + set_time + " " + avg_freq)
                 end
                 
                 % Check lower lim
                 steps(step_pos) = max_low(step_pos) / 2;
-                checkres;
+                [err_found, sat_vals, con_vals] = checkres(steps);
+                RES(rho_A_id, M_id, UA2_id, step_pos, 2) = err_found;
+                SAT_STATS(rho_A_id, M_id, UA2_id, step_pos, 2, :) = sat_vals;
+                CON_STATS(rho_A_id, M_id, UA2_id, step_pos, 2, :, :) = con_vals;
                 if (err_found)
                     err_cnt = err_cnt + 1;
                     disp("Error: " + rho_A + " " + M + " " + UA2 + " " + step_pos + " low")
-                    disp("Vals: " + ss_err + " " + os + " " + set_time + " " + avg_freq)
                 end
             end
         end
