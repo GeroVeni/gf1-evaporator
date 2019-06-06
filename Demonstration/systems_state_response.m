@@ -3,21 +3,21 @@
 out_names = ["X2","P2","T2","T1","F4","L2","T100","Q100","F100","Q200","T201","F5"];
 
 %% run simulations of multiple types of system
-[t,x,y]=sim('basic_pi_control');
-j = 1;
-for i = 1:length(y(1,:))
-    figure(1)
-    sgtitle('Basic PI control')
-    
-    if i == 1 || i==2 || i==6    
-        subplot(3,1,j)
-        j = j+1;
-        plot(t,y(:,i))
-        %     ylim([0 2]);
-        title(out_names(i));
-    end
-    
-end
+% [t,x,y]=sim('basic_pi_control');
+% j = 1;
+% for i = 1:length(y(1,:))
+%     figure(1)
+%     sgtitle('Basic PI control')
+%     
+%     if i == 1 || i==2 || i==6    
+%         subplot(3,1,j)
+%         j = j+1;
+%         plot(t,y(:,i))
+%         %     ylim([0 2]);
+%         title(out_names(i));
+%     end
+%     
+% end
 
 % K = K_prop;
 % L = L_prop;
@@ -32,21 +32,21 @@ end
 %     title(out_names(i));
 % end
 
-K = K_int;
-L = L_int;
-[t,x,y]=sim('integral_state_feedback');
-j = 1;
-for i = 1:length(y(1,:))
-    figure(3)
-    sgtitle('integral state feedback control')
-    if i == 1 || i==2 || i==6    
-        subplot(3,1,j)
-        j = j+1;
-        plot(t,y(:,i))
-        %     ylim([0 2]);
-        title(out_names(i));
-    end
-end
+% K = K_int;
+% L = L_int;
+% [t,x,y]=sim('integral_state_feedback');
+% j = 1;
+% for i = 1:length(y(1,:))
+%     figure(3)
+%     sgtitle('integral state feedback control')
+%     if i == 1 || i==2 || i==6    
+%         subplot(3,1,j)
+%         j = j+1;
+%         plot(t,y(:,i))
+%         %     ylim([0 2]);
+%         title(out_names(i));
+%     end
+% end
 
 % K = K_opt;
 % L = L_opt;
@@ -64,17 +64,17 @@ end
 %     end
 % end
 % 
-% [t,x,y]=sim('gain_schedule_integral_state_feedback');
-% j = 1;
-% for i = 1:length(y(1,:))
-%     figure(5)
-%     sgtitle('gain schedules state feedback control')
-%     if i == 1 || i==2 || i==6    
-%         subplot(3,1,j)
-%         j = j+1;
-%         plot(t,y(:,i))
-%         %     ylim([0 2]);
-%         title(out_names(i));
-%     end
-% end
+[t,x,y]=sim('gain_schedule_integral_state_feedback');
+j = 1;
+for i = 1:length(y(1,:))
+    figure(5)
+    sgtitle('gain scheduled state feedback control')
+    if i == 1 || i==2 || i==6    
+        subplot(3,1,j)
+        j = j+1;
+        plot(t,y(:,i))
+        %     ylim([0 2]);
+        title(out_names(i));
+    end
+end
 

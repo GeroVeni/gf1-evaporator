@@ -97,26 +97,26 @@ K5_int = KL5(1:3,1:3);
 L5_int = KL5(1:3,4:6);
 
 %% Matrix interpolation construction (with optimised control)
-% K_interp(:,:,1) = K1_opt;
-% K_interp(:,:,2) = K2_opt;
-% K_interp(:,:,3) = K3_opt;
-% K_interp(:,:,4) = K4_opt;
-% K_interp(:,:,5) = K5_opt;
-% L_interp(:,:,1) = L1_opt;
-% L_interp(:,:,2) = L2_opt;
-% L_interp(:,:,3) = L3_opt;
-% L_interp(:,:,4) = L4_opt;
-% L_interp(:,:,5) = L5_opt;
+K_interp(:,:,1) = K1_opt;
+K_interp(:,:,2) = K2_opt;
+K_interp(:,:,3) = K3_opt;
+K_interp(:,:,4) = K4_opt;
+K_interp(:,:,5) = K5_opt;
+L_interp(:,:,1) = L1_opt;
+L_interp(:,:,2) = L2_opt;
+L_interp(:,:,3) = L3_opt;
+L_interp(:,:,4) = L4_opt;
+L_interp(:,:,5) = L5_opt;
 
 %% Matrix interpolation construction (with pole placed control)
-K_interp(:,:,1) = K1_int;
-K_interp(:,:,2) = K2_int;
-K_interp(:,:,3) = K3_int;
-K_interp(:,:,4) = K4_int;
-K_interp(:,:,5) = K5_int;
-L_interp(:,:,1) = L1_int;
-L_interp(:,:,2) = L2_int;
-L_interp(:,:,3) = L3_int;
-L_interp(:,:,4) = L4_int;
-L_interp(:,:,5) = L5_int;
+% K_interp(:,:,1) = K1_int;
+% K_interp(:,:,2) = K2_int;
+% K_interp(:,:,3) = K3_int;
+% K_interp(:,:,4) = K4_int;
+% K_interp(:,:,5) = K5_int;
+% L_interp(:,:,1) = L1_int;
+% L_interp(:,:,2) = L2_int;
+% L_interp(:,:,3) = L3_int;
+% L_interp(:,:,4) = L4_int;
+% L_interp(:,:,5) = L5_int;
 
