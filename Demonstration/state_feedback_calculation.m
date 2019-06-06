@@ -22,6 +22,7 @@ U = [2,194.7,208];
 % consider open loop poles (0, -0.0558, -0.1)
 eig(A);
 % use basic proportional controller closed-loop poles as a starting point
+% see basic_pi_poles.m
 P = [-0.6242 + 0.247i, -0.6242 - 0.247i, -1.4666];
 K_prop = place(A,B,P);
 L_prop = zeros(3);
@@ -61,15 +62,15 @@ L_int = KL(1:3,4:6);
 
 %% optimising control using LQR
 % setup Q and R weight matricies
-Q = [[1,0,0,0,0,0];
-     [0,1,0,0,0,0];
-     [0,0,1,0,0,0];
-     [0,0,0,1,0,0];
-     [0,0,0,0,1,0];
-     [0,0,0,0,0,1]];
-R = [[1,0,0];
-     [0,1,0];
-     [0,0,1]];
+% Q = [[1,0,0,0,0,0];
+%      [0,1,0,0,0,0];
+%      [0,0,1,0,0,0];
+%      [0,0,0,1,0,0];
+%      [0,0,0,0,1,0];
+%      [0,0,0,0,0,1]];
+% R = [[1,0,0];
+%      [0,1,0];
+%      [0,0,1]];
 
 [KL,S,e] = lqr(A_ext,B_ext,Q,R);
 % separate K and L matricies

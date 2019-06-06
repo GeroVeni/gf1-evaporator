@@ -31,7 +31,7 @@ out_names = ["X2","P2","T2","T1","F4","L2","T100","Q100","F100","Q200","T201","F
 %     %     ylim([0 2]);
 %     title(out_names(i));
 % end
-
+% 
 % K = K_int;
 % L = L_int;
 % [t,x,y]=sim('integral_state_feedback');
@@ -48,13 +48,27 @@ out_names = ["X2","P2","T2","T1","F4","L2","T100","Q100","F100","Q200","T201","F
 %     end
 % end
 
-% K = K_opt;
-% L = L_opt;
-% [t,x,y]=sim('process_state_control_out_ports');
+K = K_opt;
+L = L_opt;
+[t,x,y]=sim('integral_state_feedback');
+j = 1;
+for i = 1:length(y(1,:))
+    figure(4)
+    sgtitle('optimised state feedback control')
+    if i == 1 || i==2 || i==6    
+        subplot(3,1,j)
+        j = j+1;
+        plot(t,y(:,i))
+        %     ylim([0 2]);
+        title(out_names(i));
+    end
+end
+% 
+% [t,x,y]=sim('gain_schedule_integral_state_feedback');
 % j = 1;
 % for i = 1:length(y(1,:))
-%     figure(4)
-%     sgtitle('optimised state feedback control')
+%     figure(5)
+%     sgtitle('gain scheduled state feedback control')
 %     if i == 1 || i==2 || i==6    
 %         subplot(3,1,j)
 %         j = j+1;
@@ -63,8 +77,7 @@ out_names = ["X2","P2","T2","T1","F4","L2","T100","Q100","F100","Q200","T201","F
 %         title(out_names(i));
 %     end
 % end
-% 
-[t,x,y]=sim('gain_schedule_integral_state_feedback');
+[t,x,y]=sim('gain_shedule_state_control_anti_windup');
 j = 1;
 for i = 1:length(y(1,:))
     figure(5)
