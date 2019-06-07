@@ -12,8 +12,9 @@ UA2s = 5:8;
 % end
 % paramlabels = names
 consts;
-in_names = ["1", "2", "3", "4", "5", "6", "7", "8"];
+in_names = ["F1", "F2", "X1", "P100", "F200", "L2 s.p.", "P2 s.p.", "X2 s.p."];
 con_names = out_names(controlled);
+sat_names = [out_names(out_saturated), state_names(state_saturated)];
 cnt = 1;
 colors = zeros(1, 48);
 for id1 = 1:length(rho_As)
@@ -36,7 +37,9 @@ for step_id = 1:8
         for id1 = 1:length(rho_As)
             for id2 = 1:length(Ms)
                 for id3 = 1:length(UA2s)
-                    vals = [vals, CON_STATS(id1, id2, id3, step_id, 1, 2, con_id)];
+                    avg_os = CON_STATS(id1, id2, id3, step_id, 2, 4, con_id);
+                    avg_os = max([avg_os, 0]);
+                    vals = [vals, avg_os];
                 end
             end
         end
@@ -47,5 +50,51 @@ for step_id = 1:8
         for id = 1:48
             b.CData(id, :) = palette(colors(id), :);
         end
+    end
+end
+
+figure(3)
+subplt_id = 1;
+for step_id = 1:8
+    subplot(4, 2, subplt_id);
+    subplt_id = subplt_id + 1;
+    vals = [];
+    for id1 = 1:length(rho_As)
+        for id2 = 1:length(Ms)
+            for id3 = 1:length(UA2s)
+                avg_os = RES(id1, id2, id3, step_id, 2);
+                vals = [vals, avg_os];
+            end
+        end
+    end
+    sep = 16;
+    ticks = [[1:12], sep + [1:12], 2*sep + [1:12], 3*sep + [1:12]];
+    b = bar(ticks,  vals, 'FaceColor', 'flat');
+    title("step on " + in_names(step_id))
+    for id = 1:48
+        b.CData(id, :) = palette(colors(id), :);
+    end
+end
+
+figure(4)
+subplt_id = 1;
+for step_id = 1:8
+    subplot(4, 2, subplt_id);
+    subplt_id = subplt_id + 1;
+    vals = [];
+    for id1 = 1:length(rho_As)
+        for id2 = 1:length(Ms)
+            for id3 = 1:length(UA2s)
+                avg_os = SAT_STATS(id1, id2, id3, step_id, 2, 6);
+                vals = [vals, avg_os];
+            end
+        end
+    end
+    sep = 16;
+    ticks = [[1:12], sep + [1:12], 2*sep + [1:12], 3*sep + [1:12]];
+    b = bar(ticks,  vals, 'FaceColor', 'flat');
+    title("Sat on " + sat_names(6) + ": step on " + in_names(step_id))
+    for id = 1:48
+        b.CData(id, :) = palette(colors(id), :);
     end
 end
